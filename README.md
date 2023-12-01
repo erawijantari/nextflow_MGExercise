@@ -48,12 +48,12 @@ We will be using the taxprofiler: https://nf-co.re/taxprofiler/1.1.2
 
 	- for metaphlan4 puhti followed set-up here: https://docs.csc.fi/apps/metaphlan/
 	- cretae the database sheet:
-		- config/database.csv
+		- exam_config/database.csv
 
 
 2. Prepare the samplesheet as requested by the workflow
 
-	- for example data: config/samplesheet.csv
+	- for example data: exam_config/samplesheet.csv
 
 3. Select configurations of the optional params (read more here: https://nf-co.re/taxprofiler/1.1.2/parameters)
 
@@ -92,7 +92,7 @@ We will be using the taxprofiler: https://nf-co.re/taxprofiler/1.1.2
 Submit the job using:
 
 ```
-sbatch SCRIPTS/tax_profiler.sh
+sbatch SCRIPTS/taxprofiler.sh
 ```
 
 ### Additional concerns to address:
