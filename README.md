@@ -13,7 +13,7 @@ Let's first configure the working directoy, for example:
 │   │   └── public_profiles
 │   ├── human_CHM13
 │   └── human_GRCh38
-|			  └── db_MetaPhlan4	
+|   └── db_MetaPhlan4	
 ├── RESULTS
 ```
 
