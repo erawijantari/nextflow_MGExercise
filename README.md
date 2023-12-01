@@ -1,4 +1,4 @@
-# Notes on the metagenomics profiling using Nextflow in csc-puhti
+# Notes on workflow for the metagenomics profiling
 
 ## Working directory configuration
 
