@@ -1,0 +1,5 @@
+sample,run_accession,instrument_platform,fastq_1,fastq_2,fasta
+SRR5024,SRR5024280,ILLUMINA,<path_to>/DATA/SRR5024280_1.fastq.gz,<path_to>/DATA/SRR5024280_2.fastq.gz,
+SRR5024,SRR5024280,ILLUMINA,<path_to>/DATA/SRR5024281_1.fastq.gz,<path_to>/DATA/SRR5024281_2.fastq.gz,
+SRR5024,SRR5024280,ILLUMINA,<path_to>/DATA/SRR5024282_1.fastq.gz,<path_to>/DATA/SRR5024282_2.fastq.gz,
+SRR5024,SRR5024280,ILLUMINA,<path_to>/DATA/SRR5024283_1.fastq.gz,<path_to>/DATA/SRR5024283_2.fastq.gz,
