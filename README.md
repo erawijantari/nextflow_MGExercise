@@ -47,8 +47,10 @@ We will be using the taxprofiler: https://nf-co.re/taxprofiler/1.1.2
 1. prepare the databse needed and create the full database sheet of tools you want to use
 
 	- for metaphlan4 puhti followed set-up here: https://docs.csc.fi/apps/metaphlan/
+ 	- for mOTU and other pipeline you can follow the reference database configurations as written here: https://nf-co.re/taxprofiler/1.1.2/docs/usage/tutorials 	
 	- cretae the database sheet:
 		- exam_config/database.csv
+
 
 
 2. Prepare the samplesheet as requested by the workflow
