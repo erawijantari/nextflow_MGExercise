@@ -47,10 +47,8 @@ We will be using the taxprofiler: https://nf-co.re/taxprofiler/1.1.2
 1. prepare the databse needed and create the full database sheet of tools you want to use
 
 	- for metaphlan4 puhti followed set-up here: https://docs.csc.fi/apps/metaphlan/
- 	- for mOTU and other pipeline you can follow the reference database configurations as written here: https://nf-co.re/taxprofiler/1.1.2/docs/usage/tutorials 	
 	- cretae the database sheet:
 		- exam_config/database.csv
-
 
 
 2. Prepare the samplesheet as requested by the workflow
@@ -110,8 +108,44 @@ sbatch SCRIPTS/taxprofiler.sh
 Due to difficulties in integrating other workflow in nextflow, the additional customize step will be executed via snakemake: GreenGenes v2 annotation and functional annotation with Humman3
 
 
-### Greengenes2 for shotgun and amplicon data adapted from @TuomasBorman
+### Greengenes2 for shotgun and amplicon data 
+adapted from @TuomasBorman
 
+#### Setting for GG2 plugin
+
+For shotgun reads, we need newest QIIME2 tools with GG2 plugin and Woltka
+
+1. Go to directory where you want to save the config for instllation (e.g in project or home, not scratch)
+
+2. Download and save the environment config file needed for installation
+wget https://raw.githubusercontent.com/qiime2/distributions/dev/2023.9/shotgun/released/qiime2-shotgun-ubuntu-latest-conda.yml
+
+3. Install QIIME2
+
+module load tykky
+mkdir qiime2-shotgun-2023.09
+conda-containerize new --mamba --prefix qiime2-shotgun-2023.09/ qiime2-shotgun-ubuntu-latest-conda.yml
+
+4. Create a file for plugin installation
+
+create a text file named `post_install_plugins_shotgun.txt`containing the following info:
+(you can use nano, vim, or other favorite text editor)
+
+pip install q2-greengenes2
+pip install woltka
+conda install -c bioconda bowtie2
+pip install https://github.com/knights-lab/SHOGUN/archive/master.zip
+pip install https://github.com/qiime2/q2-shogun/archive/master.zip
+qiime dev refresh-cache
+
+5. Install plugins
+
+conda-containerize update qiime2-shotgun-2023.09/ --post-install post_install_plugins_shotgun.txt
+
+6. Add the software path so that the software is executable
+
+export PATH="qiime2-shotgun-2023.09/bin:$PATH" 
+(preferably using full path, here is the example of current directory)
 
 
 
