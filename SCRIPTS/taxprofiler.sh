@@ -15,7 +15,7 @@ module load nextflow
 #run the nextflow 
 #for testing (in profile params use test,singularity flag )
 
-nextflow run nf-core/taxprofiler -r 1.1.2 \
+nextflow run nf-core/taxprofiler -r 1.1.5 \
    -profile singularity --max_cpus 4 \
    --input ./config/samplesheet.csv \
    --databases ./config/database.csv \
@@ -23,8 +23,10 @@ nextflow run nf-core/taxprofiler -r 1.1.2 \
    --perform_shortread_qc --save_preprocessed_reads\
    --perform_shortread_complexityfilter  --shortread_complexityfilter_tool bbduk \
    --perform_shortread_hostremoval \
-   --hostremoval_reference ./DB/T2T-CHM13v2.0.zip \
-   --shortread_hostremoval_index ./DB/human_CHM13/ \
+   --hostremoval_reference /scratch/project_2005073/USER_WORKSPACES/pande/exercise/nextflow_metagenome/DB/T2T-CHM13v2.0.zip \
+   --shortread_hostremoval_index /scratch/project_2005073/USER_WORKSPACES/pande/exercise/nextflow_metagenome/DB/human_CHM13/ \
+   --save_hostremoval_unmapped \
+   --save_analysis_ready_fastqs \
    --run_profile_standardisation \
    --run_motus --run_metaphlan 
 

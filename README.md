@@ -61,6 +61,7 @@ We will be using the taxprofiler: https://nf-co.re/taxprofiler/1.1.2
 			- Let's use fastp and use the tool's default adapter unless the adapter is diferent
 			- no need to merge pairs if using metaphlan4 or motus
 			- save the resulting processed reads with : `--save_preprocessed_reads`
+			- Let's also save the final reads from all processing steps (that are sent to classification profiling) in results directory `--save_analysis_ready_fastqs`
 	
 	- Let's activate the complexity filtering using bbduk step using: `--perform_shortread_complexityfilter  --shortread_complexityfilter_tool bbduk`
 
@@ -69,6 +70,7 @@ We will be using the taxprofiler: https://nf-co.re/taxprofiler/1.1.2
 		Optional to provide the indexed file.
 		`--hostremoval_reference /scratch/project_xxx/USER_WORKSPACES/xxx/exercise/nextflow_metagenome/DB/T2T-CHM13v2.0.zip`
 		If you downloaded it from local dir copy it to puhti using `scp`
+		- Let use `--save_hostremoval_unmapped` just to be safe to store the unmapped host reads (typically this is the final processed reads)
 
 
 	- We can skip the Run merging for now
@@ -99,5 +101,15 @@ sbatch SCRIPTS/taxprofiler.sh
 
 - resources allocation in puhti
 - customaize the nf-core pipeline if additional step needed --> functional annotation using humann3
+
+
+## Snakemake
+
+Due to difficulties in integrating other workflow in nextflow, the additional customize step will be executed via snakemake: GreenGenes v2 annotation and functional annotation with Humman3
+
+
+### Greengenes2 for shotgun and amplicon data adapted from @TuomasBorman
+
+
 
 
