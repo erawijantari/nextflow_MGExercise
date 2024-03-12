@@ -15,13 +15,15 @@ Let's first configure the working directoy, for example:
 │   └── human_GRCh38
 |   └── db_MetaPhlan4	
 ├── RESULTS
+├── workflow
 ```
 
 - `config` to store all configuartion files needed for the pipeline to run
 - `DATA` to store the the input raw sequence (in fastq or fastq.gz)
-- `DATA` to store the pre-build reference database needed by the pipeline
+- `DB` to store the pre-build reference database needed by the pipeline
 - `RESULTS` placeholder for the output file
 - `SCRIPTS` to store scripts needed for analysis
+- `workflow` to store the snakefile
 
 ## Data sources
 
@@ -31,10 +33,10 @@ The full set of samples available here: https://www.ebi.ac.uk/ena/browser/view/P
 
 For simplicity we will only use the before and after (4 weeks) FMT data from 2 participants.
 
-To download the data run this command:
+Move to the desired directory and to download the data run this command:
 
 ```
-sbatch ./SCRIPTS/download.sh
+sbatch ../SCRIPTS/download.sh
 ```
 
 
@@ -113,18 +115,22 @@ adapted from @TuomasBorman
 
 #### Setting for GG2 plugin
 
+FOR SHOTGUN
+
 For shotgun reads, we need newest QIIME2 tools with GG2 plugin and Woltka
 
-1. Go to directory where you want to save the config for instllation (e.g in project or home, not scratch)
+1. Go to directory where you want to save the config for installation (e.g in project or home, not scratch)
 
 2. Download and save the environment config file needed for installation
 wget https://raw.githubusercontent.com/qiime2/distributions/dev/2023.9/shotgun/released/qiime2-shotgun-ubuntu-latest-conda.yml
 
 3. Install QIIME2
 
+```
 module load tykky
 mkdir qiime2-shotgun-2023.09
 conda-containerize new --mamba --prefix qiime2-shotgun-2023.09/ qiime2-shotgun-ubuntu-latest-conda.yml
+```
 
 4. Create a file for plugin installation
 
@@ -139,13 +145,35 @@ pip install https://github.com/qiime2/q2-shogun/archive/master.zip
 qiime dev refresh-cache
 
 5. Install plugins
-
+```
 conda-containerize update qiime2-shotgun-2023.09/ --post-install post_install_plugins_shotgun.txt
+```
 
 6. Add the software path so that the software is executable
-
+```
 export PATH="qiime2-shotgun-2023.09/bin:$PATH" 
+```
 (preferably using full path, here is the example of current directory)
+
+7. Download the WoL2 database
+
+http://ftp.microbio.me/pub/wol2/
+https://github.com/qiyunzhu/woltka/blob/master/doc/wol.md#the-wol-database
+
+Let's put this in the DB directory, remember to change the project number in the script to match yours
+
+```
+cd ./DB
+chmod +x download_wol2.sh
+sbatch ../SCRIPTS/download_wol2.sh 
+```
+
+8. Now create the Snakefile under the `workflow` directory
+You can see the example `Snakefile_gg2_shotgun` in this repository, and adjust the path to the qiime config, project number, and files locations according to your need.
+We will use the pre-processed reads from nextflow that has been stored in `RESULTS/analysis_ready_fastqs`, if you cannot find this folder, you might need to re-run the taxprofiler with updated additional option.
+
+9. After modification of the Snakefile, let's prepare for the bash script tpo execute snakemake
+Please see `SCRIPTS/run_GG2shotgun_workflow` for example, and modify the project number
 
 
 
