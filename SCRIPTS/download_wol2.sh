@@ -2,7 +2,7 @@
 #SBATCH --job-name=download_data           # Name of the job visible in the queue.
 #SBATCH --account=project_2005073       # Choose the billing project. Has to be defined!
 #SBATCH --partition=small          # Job queues: test, interactive, small, large, longrun, hugemem, hugemem_longrun
-#SBATCH --time=01:00:00           # Maximum duration of the job. Max: depends of the partition. 
+#SBATCH --time=04:00:00           # Maximum duration of the job. Max: depends of the partition. 
 #SBATCH --mem=1G                  # How much RAM is reserved for job per node.
 #SBATCH --ntasks=1                # Number of tasks. Max: depends on partition.
 #SBATCH --cpus-per-task=1         # How many processors work on one task. Max: Number of CPUs per node.#!/bin/sh
