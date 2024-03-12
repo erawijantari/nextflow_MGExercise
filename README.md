@@ -175,5 +175,11 @@ We will use the pre-processed reads from nextflow that has been stored in `RESUL
 9. After modification of the Snakefile, let's prepare for the bash script tpo execute snakemake
 Please see `SCRIPTS/run_GG2shotgun_workflow` for example, and modify the project number
 
+10. To execute run:
+
+```
+chmod +x ./SCRIPTS/run_GG2shotgun_workflow.sh
+./SCRIPTS/run_GG2shotgun_workflow.sh
+```
 
 
