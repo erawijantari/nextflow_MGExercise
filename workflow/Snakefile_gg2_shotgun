@@ -28,7 +28,7 @@ rule align_sequences:
     threads:
         32
     resources:
-        mem_mb = 90000,
+        mem_mb = 150000,
         tmpdir = os.path.abspath("tmpdir")
     shell:
         """
