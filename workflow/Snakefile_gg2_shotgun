@@ -10,11 +10,11 @@ rule all:
     input:
         expand("RESULTS/shotgun/bowtie2/{sample}_aligned.sam.gz", sample=SAMPLES),
         "RESULTS/shotgun/woltka/ogu.biom",
-        #"RESULTS/shotgun/gg2/ogu.biom.qza",
-        #"RESULTS/shotgun/gg2/counts.qza",
-        #"RESULTS/shotgun/gg2/taxonomy.qza",
-        #"RESULTS/shotgun/gg2/phylogeny.nwk.qza",
-        #"RESULTS/shotgun/woltka/function"
+        "RESULTS/shotgun/gg2/ogu.biom.qza",
+        "RESULTS/shotgun/gg2/counts.qza",
+        "RESULTS/shotgun/gg2/taxonomy.qza",
+        "RESULTS/shotgun/gg2/phylogeny.nwk.qza",
+        "RESULTS/shotgun/woltka/function"
         
         
 

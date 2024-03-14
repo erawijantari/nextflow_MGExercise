@@ -6,7 +6,7 @@ source ~/.bashrc
 source ~/.bash_profile
 
 
-
+mkdir -p ./RESULTS/shotgun/
 snakemake  -s ./workflow/Snakefile_gg2_shotgun  --cluster \
     " sbatch --account=project_2005073 \
     --partition small --mem 150G --time=2-00:00:00 \
