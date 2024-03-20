@@ -28,5 +28,5 @@ nextflow run nf-core/taxprofiler -r 1.1.5 \
    --save_hostremoval_unmapped \
    --save_analysis_ready_fastqs \
    --run_profile_standardisation \
-   --run_motus --run_metaphlan 
+   --run_motus --run_metaphlan --run_kraken2
 

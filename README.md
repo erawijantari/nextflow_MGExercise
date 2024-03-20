@@ -49,6 +49,9 @@ We will be using the taxprofiler: https://nf-co.re/taxprofiler/1.1.2
 1. prepare the databse needed and create the full database sheet of tools you want to use
 
 	- for metaphlan4 puhti followed set-up here: https://docs.csc.fi/apps/metaphlan/
+	- for kraken2 you can download database from here: https://benlangmead.github.io/aws-indexes/k2
+	for example we want to use the PlusPF database from 2022-09-265, execute
+	`wget https://genome-idx.s3.amazonaws.com/kraken/k2_pluspf_20221209.tar.gz` and unzip  the file using `tar -xvzf k2_pluspf_20221209.tar.gz`in the directory of interest
 	- cretae the database sheet:
 		- exam_config/database.csv
 
@@ -113,7 +116,7 @@ Due to difficulties in integrating other workflow in nextflow, the additional cu
 ### Greengenes2 for shotgun and amplicon data 
 adapted from @TuomasBorman
 
-#### Setting for GG2 plugin
+#### Setting and Running  GG2 plugin
 
 FOR SHOTGUN
 
@@ -172,8 +175,8 @@ sbatch ../SCRIPTS/download_wol2.sh
 You can see the example `Snakefile_gg2_shotgun` in this repository, and adjust the path to the qiime config, project number, and files locations according to your need.
 We will use the pre-processed reads from nextflow that has been stored in `RESULTS/analysis_ready_fastqs`, if you cannot find this folder, you might need to re-run the taxprofiler with updated additional option.
 
-9. After modification of the Snakefile, let's prepare for the bash script tpo execute snakemake
-Please see `SCRIPTS/run_GG2shotgun_workflow` for example, and modify the project number
+9. After modification of the Snakefile, let's prepare for the bash script to execute snakemake
+Please see `SCRIPTS/run_GG2shotgun_workflow.sh` for example, and modify the project number
 
 10. To execute run:
 
@@ -181,5 +184,29 @@ Please see `SCRIPTS/run_GG2shotgun_workflow` for example, and modify the project
 chmod +x ./SCRIPTS/run_GG2shotgun_workflow.sh
 ./SCRIPTS/run_GG2shotgun_workflow.sh
 ```
+
+**IMPORTANT NOTES** regarding the use of snakemake in csc
+The qiime2 here was created using tykky installation, thus, it will be compatible using the snakemake version 7.17.1.
+See more about running snakemake in csc: https://docs.csc.fi/support/tutorials/snakemake-puhti/
+Other version seems to fail if you use tykky installation for the package.
+
+
+### Humann for shotgun metagenomic
+adapted from @TuomasBorman and @KatariinaParnanen
+
+1. Create the Snakefile under the `workflow` directory
+Example given as `Snakefile_humann` that you can create with text editor (nano, vim, etc.). Remember to adjust the path, project allocation, and file locations.
+
+2. Let's prepare fir the bash script to execute snakemake. It is easier to documment the version use etc. and command execution with bash script.
+Please see `SCRIPTS/run_humann_workflow.sh` for example, and modify the project number
+
+3. To execute run:
+
+```
+chmod +x ./SCRIPTS/run_humann_workflow.sh
+./SCRIPTS/run_humann_workflow.sh
+```
+
+**IMPORTANT NOTES** always remember to check the tools version especially if running in batch. For running samples more than 100, it is more convenience to use the `group` function of snakemake
 
 
