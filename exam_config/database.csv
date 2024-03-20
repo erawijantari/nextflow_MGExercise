@@ -1,3 +1,4 @@
 tool,db_name,db_params,db_path
-metaphlan,db_meta4,,<path_to>/metaphlan4_DB/metaphlan_databases/
-motus,db_mOTU,,<path_to>DB/db_mOTU/
+metaphlan,db_meta4,,/scratch/project_200xxx/DATABASES/metaphlan4_DB/metaphlan_databases/
+motus,db_mOTU,,/scratch/project_200xxx/USER_WORKSPACES/pande/exercise/nextflow_metagenome/DB/db_mOTU/
+kraken2,db_kraken2,,/scratch/project_200xxx/USER_WORKSPACES/pande/exercise/nextflow_metagenome/DB/PlusPF-202209/
