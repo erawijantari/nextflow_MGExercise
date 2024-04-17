@@ -88,12 +88,9 @@ We will be using the taxprofiler: https://nf-co.re/taxprofiler/1.1.2
 
 4. Be sure to update the pipeline regularly `nextflow pull nf-core/taxprofiler`
 
-5. Let's create the sbatch script to submit the job, for sample less than 100, hyperqueue is not needed --> confirm again
-
-	See example: https://yetulaxman.github.io/containers-workflows/hands-on/day4/nextflow-containers.html
-	In case we need hyperqueue: 
-	https://yetulaxman.github.io/containers-workflows/hands-on/day4/nf-core-hyperqueue.html
-
+5. Let's create the sbatch script to submit the job, for sample less than 100.
+See example: https://yetulaxman.github.io/containers-workflows/hands-on/day4/nextflow-containers.html
+	
 	see example: SCRIPTS/tax_profiler.sh
 
 Submit the job using:
@@ -101,6 +98,30 @@ Submit the job using:
 ```
 sbatch SCRIPTS/taxprofiler.sh
 ```
+
+**IMPORTANT NOTES** regarding the nextflow efficient job runs.
+For job with few task (for example parallel processing for less than 50 samples), using the local executor should be sufficient.
+The example given in the `SCRIPTS/taxprofiler.sh` is suitable for few sample. Adjust the `#SBATCH --ntasks=4` and `#SBATCH --mem=120G` parameters depending on the need.
+In case need for upscale (more than 100 samples? or the job cannot finished within 3 days), the use of hyperqueu can be considered.
+example of usage:
+https://yetulaxman.github.io/containers-workflows/hands-on/day4/nf-core-hyperqueue.html
+https://a3s.fi/CSC_training/nextflow_scale.html#/deploying-nextflow-pipelines-at-scale
+
+For example we can specify the executor by writing `nextflow.config` file in the working directory and write this lines:
+```
+executor {
+
+   queueSize = 20
+
+   name = 'hq'
+
+   cpus = 40
+
+ }
+```
+
+If using the filename other than `nextflow.config`, then we can also run the pipeline by specifying `-c <config filename> `during executing the nextflow. This is useful if we are using the readymade pipeline in nextflow which usually has in-house config file that we need to overwrite.
+
 
 ### Additional concerns to address:
 
