@@ -1,9 +1,10 @@
 #!/bin/bash
-#SBATCH --time=20:00:00
+#SBATCH --time=72:00:00
 #SBATCH --partition=small
+#SBATCH --ntasks=4
 #SBATCH --account=project_xxxx
 #SBATCH --cpus-per-task=4
-#SBATCH --mem-per-cpu=80G
+#SBATCH --mem=120G
 
 export SINGULARITY_TMPDIR=$PWD
 export SINGULARITY_CACHEDIR=$PWD
