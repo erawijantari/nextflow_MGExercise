@@ -24,9 +24,9 @@ rule run_humann:
     input:
         "RESULTS/analysis_ready_fastqs/{sample,[^/]+}.unmapped_1.fastq.gz"
     output:
-        o1 = "RESULTS/humann3/raw/{sample}_merged_genefamilies.tsv",
-        o2 = "RESULTS/humann3/raw/{sample}_merged_pathcoverage.tsv",
-        o3 = "RESULTS/humann3/raw/{sample}_merged_pathabundance.tsv"
+        o1 = "RESULTS/humann3/raw/{sample}.unmapped_1_genefamilies.tsv",
+        o2 = "RESULTS/humann3/raw/{sample}.unmapped_1_pathcoverage.tsv",
+        o3 = "RESULTS/humann3/raw/{sample}.unmapped_1_pathabundance.tsv"
     params:
         outdir = "RESULTS/humann3/raw"
     threads:
@@ -49,9 +49,9 @@ rule run_humann:
 
 rule renorm_cpm:
     input:
-        "RESULTS/humann3/raw/{sample}_merged_genefamilies.tsv"
+        "RESULTS/humann3/raw/{sample}.unmapped_1_genefamilies.tsv"
     output:
-        "RESULTS/humann3/processed/{sample}_merged_genefamilies_cpm.tsv"
+        "RESULTS/humann3/processed/{sample}.unmapped_1_genefamilies_cpm.tsv"
     shell:
         """
         module load humann/3.8
@@ -62,9 +62,9 @@ rule renorm_cpm:
 
 rule renorm_relab:
     input:
-        "RESULTS/humann3/raw/{sample}_merged_genefamilies.tsv"
+        "RESULTS/humann3/raw/{sample}.unmapped_1_genefamilies.tsv"
     output:
-        "RESULTS/humann3/processed/{sample}_merged_genefamilies_relab.tsv"
+        "RESULTS/humann3/processed/{sample}.unmapped_1_genefamilies_relab.tsv"
     shell:
         """
         module load humann/3.8
@@ -79,9 +79,9 @@ rule renorm_relab:
 
 rule regroup_cpm:
     input:
-        "RESULTS/humann3/processed/{sample}_merged_genefamilies_cpm.tsv"
+        "RESULTS/humann3/processed/{sample}.unmapped_1_genefamilies_cpm.tsv"
     output:
-        "RESULTS/humann3/processed/{sample}_merged_genefamilies_cpm_regroup.tsv"
+        "RESULTS/humann3/processed/{sample}.unmapped_1_genefamilies_cpm_regroup.tsv"
     shell:
         """
         module load humann/3.8
@@ -92,9 +92,9 @@ rule regroup_cpm:
 
 rule regroup_relab:
     input:
-        "RESULTS/humann3/processed/{sample}_merged_genefamilies_relab.tsv"
+        "RESULTS/humann3/processed/{sample}.unmapped_1_genefamilies_relab.tsv"
     output:
-        "RESULTS/humann3/processed/{sample}_merged_genefamilies_relab_regroup.tsv"
+        "RESULTS/humann3/processed/{sample}.unmapped_1_genefamilies_relab_regroup.tsv"
     shell:
         """
         module load humann/3.8
@@ -109,9 +109,9 @@ rule regroup_relab:
 
 rule rename_cpm:
     input:
-        "RESULTS/humann3/processed/{sample}_merged_genefamilies_cpm_regroup.tsv"
+        "RESULTS/humann3/processed/{sample}.unmapped_1_genefamilies_cpm_regroup.tsv"
     output:
-        "RESULTS/humann3/processed/{sample}_merged_genefamilies_cpm_regroup_rename.tsv"
+        "RESULTS/humann3/processed/{sample}.unmapped_1_genefamilies_cpm_regroup_rename.tsv"
     shell:
         """
         module load humann/3.8
@@ -122,9 +122,9 @@ rule rename_cpm:
 
 rule rename_relab:
     input:
-        "RESULTS/humann3/processed/{sample}_merged_genefamilies_relab_regroup.tsv"
+        "RESULTS/humann3/processed/{sample}.unmapped_1_genefamilies_relab_regroup.tsv"
     output:
-        "RESULTS/humann3/processed/{sample}_merged_genefamilies_relab_regroup_rename.tsv"
+        "RESULTS/humann3/processed/{sample}.unmapped_1_genefamilies_relab_regroup_rename.tsv"
     shell:
         """
         module load humann/3.8
@@ -141,10 +141,10 @@ rule rename_relab:
 
 rule copy_files_for_merging:
     input:
-        i1 = expand("RESULTS/humann3/processed/{sample}_merged_genefamilies_relab_regroup_rename.tsv", sample=SAMPLES),
-        i2 = expand("RESULTS/humann3/processed/{sample}_merged_genefamilies_cpm_regroup_rename.tsv", sample=SAMPLES),
-        i3 = expand("RESULTS/humann3/raw/{sample}_merged_pathabundance.tsv", sample=SAMPLES),
-        i4 = expand("RESULTS/humann3/raw/{sample}_merged_pathcoverage.tsv", sample=SAMPLES)
+        i1 = expand("RESULTS/humann3/processed/{sample}.unmapped_1_genefamilies_relab_regroup_rename.tsv", sample=SAMPLES),
+        i2 = expand("RESULTS/humann3/processed/{sample}.unmapped_1_genefamilies_cpm_regroup_rename.tsv", sample=SAMPLES),
+        i3 = expand("RESULTS/humann3/raw/{sample}.unmapped_1_pathabundance.tsv", sample=SAMPLES),
+        i4 = expand("RESULTS/humann3/raw/{sample}.unmapped_1_pathcoverage.tsv", sample=SAMPLES)
     output:
         o1 = directory("RESULTS/humann3/final/genefamilies_relab"),
         o2 = directory("RESULTS/humann3/final/genefamilies_cpm"),
@@ -152,7 +152,7 @@ rule copy_files_for_merging:
         o4 = directory("RESULTS/humann3/final/pathcoverage"),
         o5 = directory("RESULTS/humann3/final/taxa")
     params:
-        i5 = expand("RESULTS/humann3/raw/{sample}_merged_humann_temp/{sample}_merged_metaphlan_bugs_list.tsv", sample=SAMPLES)
+        i5 = expand("RESULTS/humann3/raw/{sample}.unmapped_1_humann_temp/{sample}.unmapped_1_metaphlan_bugs_list.tsv", sample=SAMPLES)
     shell:
         """
         # Copy files to directory storing final results
@@ -171,7 +171,7 @@ rule merge_samples:
         i4 = "RESULTS/humann3/final/pathcoverage",
         i5 = "RESULTS/humann3/final/taxa"
     params:
-        i5 = expand("RESULTS/humann3/final/taxa/{sample}_merged_metaphlan_bugs_list.tsv", sample=SAMPLES),
+        i5 = expand("RESULTS/humann3/final/taxa/{sample}.unmapped_1_metaphlan_bugs_list.tsv", sample=SAMPLES),
     output:
         o1 = "RESULTS/humann3/final/genefamilies_relab.txt",
         o2 = "RESULTS/humann3/final/genefamilies_cpm.txt",
