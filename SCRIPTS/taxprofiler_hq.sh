@@ -42,7 +42,7 @@ done
 #run the nextflow 
 #for testing (in profile params use test,singularity flag )
 
-nextflow run nf-core/taxprofiler -r 1.1.5 -c /scratch/project_200xxxx/USERS/pande/nextflow.config -resume\
+nextflow run nf-core/taxprofiler -r 1.1.5 -c ./config/nextflow.config -resume\
    -profile singularity \
    --input /scratch/project_201xxx/USERS/pande/samplesheet.csv \
    --databases /scratch/project_201xxx/config/database.csv \
