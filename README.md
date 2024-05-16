@@ -102,31 +102,36 @@ sbatch SCRIPTS/taxprofiler.sh
 **IMPORTANT NOTES** regarding the nextflow efficient job runs.
 For job with few task (for example parallel processing for less than 50 samples), using the local executor should be sufficient.
 The example given in the `SCRIPTS/taxprofiler.sh` is suitable for few sample. Adjust the `#SBATCH --ntasks=4` and `#SBATCH --mem=120G` parameters depending on the need.
-In case need for upscale (more than 100 samples? or the job cannot finished within 3 days), the use of hyperqueu can be considered.
-example of usage:
+
+
+### Running the workflow using hyperqueue
+
+For the job that cannot be achieved within 3 days (maximum time allocations for 2 widely available nodes), it will be necessary to run the workflow using more efficient executor such as hyperqueue
+
+Read more about using nextflow with hyperqueu executor in puhti:
+
 https://yetulaxman.github.io/containers-workflows/hands-on/day4/nf-core-hyperqueue.html
 https://a3s.fi/CSC_training/nextflow_scale.html#/deploying-nextflow-pipelines-at-scale
 
-For example we can specify the executor by writing `nextflow.config` file in the working directory and write this lines:
+The script [taxprofiler_hq.sh](https://github.com/erawijantari/workflow_metagenome/blob/main/SCRIPTS/taxprofiler_hq.sh) shows the example of using the hyperqueu for running the same job in the **taxprofiler.sh**.
+
+
+In addition, the config to request the resource should be specified.
+See the nextflow.config[https://github.com/erawijantari/workflow_metagenome/blob/main/exam_config/nextflow.config] for example.
+
+This nextflow runs should be configure to point the config file, see lines 45 for the example, where the -c options is introduced:
+
 ```
-executor {
-
-   queueSize = 20
-
-   name = 'hq'
-
-   cpus = 40
-
- }
+nextflow run nf-core/taxprofiler -r 1.1.5 -c ./config/nextflow.config -resume\
+.....
 ```
 
-If using the filename other than `nextflow.config`, then we can also run the pipeline by specifying `-c <config filename> `during executing the nextflow. This is useful if we are using the readymade pipeline in nextflow which usually has in-house config file that we need to overwrite.
+After adjusting the bash script and nextflow config, the job submission can be done similar to the previous example, by using:
 
 
-### Additional concerns to address:
-
-- resources allocation in puhti
-- customaize the nf-core pipeline if additional step needed --> functional annotation using humann3
+```
+sbatch SCRIPTS/taxprofiler.sh
+```
 
 
 ## Snakemake
